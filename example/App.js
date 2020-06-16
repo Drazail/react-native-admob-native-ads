@@ -36,8 +36,8 @@ const App = () => {
         width: '100%',
         justifyContent: 'center',
       }}>
-      <ScrollView>
-        <NativeAdView
+      <View>
+      <NativeAdView
           onAdLoaded={_onAdLoaded}
           onAdFailedToLoad={_onAdFailedToLoad}
           onUnifiedNativeAdLoaded={event => {
@@ -117,11 +117,10 @@ const App = () => {
                 backgroundColor: 'gray',
               }}
             />
+            </View>
           </View>
         </NativeAdView>
-       
-
-      </ScrollView>
+      </View>
     </View>
   );
 };

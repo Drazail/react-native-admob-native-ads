@@ -36,6 +36,7 @@ public class RNAdMobNativeViewManager extends ViewGroupManager<RNNativeAdWrapper
     public static final String PROP_TEST_DEVICES = "testDevices";
     public static final String PROP_AD_UNIT_ID = "adUnitID";
     public static final String PROP_MEDIA_VIEW = "mediaview";
+    public static final String PROP_DELAY_AD_LOAD = "delayAdLoad";
     public static final String PROP_REFRESH_INTERVAL = "refreshInterval";
     public static final String PROP_HEADLINE_VIEW = "headline";
     public static final String PROP_TAGLINE_VIEW = "tagline";
@@ -190,6 +191,12 @@ public class RNAdMobNativeViewManager extends ViewGroupManager<RNNativeAdWrapper
 
     }
 
+    @ReactProp(name = PROP_DELAY_AD_LOAD)
+    public void setPropDelayAdLoad(final RNNativeAdWrapper view, final int delay) {
+
+        nativeAdView.setLoadWithDelay(delay);
+
+    }
 
     @ReactProp(name = PROP_TEST_DEVICES)
     public void setPropTestDevices(final RNNativeAdWrapper view, final ReadableArray testDevices) {
@@ -200,6 +207,12 @@ public class RNAdMobNativeViewManager extends ViewGroupManager<RNNativeAdWrapper
         RequestConfiguration configuration =
                 new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
         MobileAds.setRequestConfiguration(configuration);
+    }
+
+    @Override
+    public void onDropViewInstance(@NonNull RNNativeAdWrapper view) {
+        super.onDropViewInstance(view);
+        nativeAdView.removeHandler();
     }
 
 
