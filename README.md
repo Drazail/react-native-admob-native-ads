@@ -3,7 +3,7 @@
 </div>
 <div align="center">
 	<p>
-    A simple and robust library for creating & displaying <a href="https://developers.google.com/admob/android/native/start">Admob Native Advanced Ads</a> in your React Native App using Native Views.
+    A simplee and robust library for creating & displaying <a href="https://developers.google.com/admob/android/native/start">Admob Native Advanced Ads</a> in your React Native App using Native Views.
 	</p>
 <div
 align="center"
