@@ -30,10 +30,21 @@ public class RNNativeAdWrapper extends LinearLayout {
             layout(getLeft(), getTop(), getRight(), getBottom());
         }
     };
+
     public int adRefreshInterval = 60000;
     Context mContext;
     UnifiedNativeAdView nativeAdView;
     UnifiedNativeAd unifiedNativeAd;
+    public static final String adPriceViews = "adPriceView";
+    public static final String adHeadline = "adHeadlineView";
+    public static final String adTagline = "adTaglineView";
+    public static final String adAdvertiser = "adAdvertiserView";
+    public static final String adStarRating = "adStarRating";
+    public static final String adImageView = "adImageView";
+    public static final String adIconView = "adIconView";
+    public static final String adCallToAction = "adCallToAction";
+    public static final String adStoreView = "adStoreView";
+
     AdListener adListener = new AdListener() {
         @Override
         public void onAdFailedToLoad(int i) {
@@ -119,6 +130,7 @@ public class RNNativeAdWrapper extends LinearLayout {
         mContext = context;
         createView(context);
         handler = new Handler();
+        Constants.cacheManager.attachAdListener(adListener);
     }
 
     public void createView(Context context) {
