@@ -206,6 +206,56 @@ public class RNNativeAdWrapper extends LinearLayout {
         removeHandler();
     }
 
+    public void attachViews() {
+
+        try {
+
+            if (nativeAdView != null) {
+
+                View advertiser = ReactFindViewUtil.findView(nativeAdView, adAdvertiser);
+                if (advertiser != null)
+                    nativeAdView.setAdvertiserView(advertiser);
+
+                View headline = ReactFindViewUtil.findView(nativeAdView, adHeadline);
+                if (headline != null)
+                    nativeAdView.setHeadlineView(headline);
+
+                View tagline = ReactFindViewUtil.findView(nativeAdView, adTagline);
+                if (tagline != null)
+                    nativeAdView.setBodyView(tagline);
+
+                View store = ReactFindViewUtil.findView(nativeAdView, adStoreView);
+                if (store != null)
+                    nativeAdView.setStoreView(store);
+
+                View iconv = ReactFindViewUtil.findView(nativeAdView, adIconView);
+                if (iconv != null)
+                    nativeAdView.setIconView(iconv);
+
+                View image = ReactFindViewUtil.findView(nativeAdView, adImageView);
+                if (image != null)
+
+                    nativeAdView.setImageView(image);
+
+                View callToAction = ReactFindViewUtil.findView(nativeAdView, adCallToAction);
+                if (callToAction != null)
+                    nativeAdView.setCallToActionView(callToAction);
+
+                View adPriceView = ReactFindViewUtil.findView(nativeAdView, adPriceViews);
+                if (adPriceView != null)
+                    nativeAdView.setCallToActionView(adPriceView);
+
+                View starRating = ReactFindViewUtil.findView(nativeAdView, adStarRating);
+                if (starRating != null)
+                    nativeAdView.setStarRatingView(starRating);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
     private void sendEvent(String name, @Nullable WritableMap event) {
 
         ReactContext reactContext = (ReactContext) mContext;
