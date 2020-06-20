@@ -20,7 +20,6 @@ public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
         return "RNAdmobNativeAdsManager";
     }
 
-
     @ReactMethod
     public void loadAds(String adUnitID, int numOfAds, int requestInterval) {
 
@@ -35,15 +34,11 @@ public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
 
     }
 
-
-
     @ReactMethod
     public void isLoadingAds(Promise promise) {
 
         promise.resolve(Constants.cacheManager.isLoading());
 
     }
-
-
 
 }

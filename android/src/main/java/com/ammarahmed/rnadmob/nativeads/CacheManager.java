@@ -34,7 +34,6 @@ public class CacheManager {
     private String adUnitIDs;
     private Context mContext;
 
-
     public boolean isLoading() {
 
         if (adLoader != null) {
@@ -43,8 +42,6 @@ public class CacheManager {
             return false;
         }
     }
-
-
 
     public int numberOfAds() {
         if (nativeAds != null) {
@@ -55,19 +52,14 @@ public class CacheManager {
 
     }
 
-
     public void attachAdListener(AdListener listener) {
        adListener = listener;
     }
 
-
-
     UnifiedNativeAd.OnUnifiedNativeAdLoadedListener onUnifiedNativeAdLoadedListener = new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
         @Override
         public void onUnifiedNativeAdLoaded(UnifiedNativeAd nativeAd) {
-
             nativeAds.add(nativeAd);
-
         }
     };
 
@@ -154,35 +146,23 @@ public class CacheManager {
             adLoader.loadAds(new AdRequest.Builder().build(),numOfAdsToLoad);
 
             previousAdRequestTime = System.currentTimeMillis();
-
-
-
-
         } catch (Exception e) {
-
-
         }
     }
 
 
     public UnifiedNativeAd getNativeAd(int index) {
         if ((System.currentTimeMillis() - previousAdRequestTime) > newAdRequestInterval) {
-
             loadNativeAds(mContext,adUnitIDs,numAdRequested, (int) newAdRequestInterval);
             return null;
         }
 
         if (nativeAds != null && nativeAds.size() != 0) {
-
             return nativeAds.get(index);
-
         } else {
             return  null;
         }
-
-
     }
-
 
 }
 
