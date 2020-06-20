@@ -56,13 +56,6 @@ public class CacheManager {
        adListener = listener;
     }
 
-    UnifiedNativeAd.OnUnifiedNativeAdLoadedListener onUnifiedNativeAdLoadedListener = new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-        @Override
-        public void onUnifiedNativeAdLoaded(UnifiedNativeAd nativeAd) {
-            nativeAds.add(nativeAd);
-        }
-    };
-
     AdListener adListen = new AdListener() {
         @Override
         public void onAdFailedToLoad(int i) {
@@ -130,7 +123,7 @@ public class CacheManager {
         numAdRequested = numOfAdsToLoad;
         try {
             builder = new AdLoader.Builder(context, adUnitID);
-            builder.forUnifiedNativeAd(onUnifiedNativeAdLoadedListener);
+            builder.forUnifiedNativeAd(new onUnifiedNativeAdLoadedListener(adUnitID, nativeAds));
             videoOptions = new VideoOptions.Builder()
                     .setStartMuted(true)
                     .build();
@@ -152,10 +145,10 @@ public class CacheManager {
 
 
     public UnifiedNativeAd getNativeAd(int index) {
-        if ((System.currentTimeMillis() - previousAdRequestTime) > newAdRequestInterval) {
-            loadNativeAds(mContext,adUnitIDs,numAdRequested, (int) newAdRequestInterval);
-            return null;
-        }
+//         if ((System.currentTimeMillis() - previousAdRequestTime) > newAdRequestInterval) {
+//             loadNativeAds(mContext,adUnitIDs,numAdRequested, (int) newAdRequestInterval);
+//             return null;
+//         }
 
         if (nativeAds != null && nativeAds.size() != 0) {
             return nativeAds.get(index);
