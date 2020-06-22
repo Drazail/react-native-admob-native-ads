@@ -170,8 +170,10 @@ public class CacheManager {
             Random random = new Random();
             int randomNumber = random.nextInt(nativeAdsMap.get(id).size() - 0) + 0;
             UnifiedNativeAd result = nativeAdsMap.get(id).get(randomNumber);
-            nativeAdsMap.get(id).remove(randomNumber);
-            EventEmitter.sendEvent((ReactContext) this.mContext, "adREMOVED", null);
+//             nativeAdsMap.get(id).remove(randomNumber);
+//             WritableMap args = Arguments.createMap();
+//             args.putInt(id, nativeAdsMap.get(id).size());
+//             EventEmitter.sendEvent((ReactContext) mContext, Constants.EVENT_AD_PRELOAD_DELETED, args);
             return result;
         } else {
             return  null;

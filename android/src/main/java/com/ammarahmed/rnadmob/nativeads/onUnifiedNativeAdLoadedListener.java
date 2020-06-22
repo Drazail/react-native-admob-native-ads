@@ -42,7 +42,7 @@ public class onUnifiedNativeAdLoadedListener implements UnifiedNativeAd.OnUnifie
         temp.add(nativeAd);
         WritableMap args = Arguments.createMap();
         args.putInt(this.adUnitId, temp.size());
-        EventEmitter.sendEvent((ReactContext) this.mContext, "testEventFuckAmin", args);
+        EventEmitter.sendEvent((ReactContext) this.mContext, Constants.EVENT_AD_PRELOAD_LOADED, args);
         this.nativeAds.put(this.adUnitId, temp);
     }
 }
