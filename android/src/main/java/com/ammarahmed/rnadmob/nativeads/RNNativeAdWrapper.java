@@ -24,7 +24,7 @@ public class RNNativeAdWrapper extends LinearLayout {
     Context mContext;
     UnifiedNativeAdView nativeAdView;
     UnifiedNativeAd unifiedNativeAd;
-    private int loadWithDelay = 1000;
+    private int loadWithDelay = 0;
     private String admobAdUnitId = "";
     private Handler handler;
     public static final String adPriceViews = "adPriceView";
@@ -277,11 +277,9 @@ public class RNNativeAdWrapper extends LinearLayout {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (Constants.cacheManager.numberOfAds() != 0) {
-                    int numOfAds = Constants.cacheManager.numberOfAds();
-                    Random random = new Random();
-                    int randomNumber = random.nextInt(numOfAds - 0) + 0;
-                    UnifiedNativeAd nativeAd = Constants.cacheManager.getNativeAd(randomNumber);
+                if (Constants.cacheManager.numberOfAds(admobAdUnitId) != 0) {
+                    int numOfAds = Constants.cacheManager.numberOfAds(admobAdUnitId);
+                    UnifiedNativeAd nativeAd = Constants.cacheManager.getNativeAd(admobAdUnitId);
                     if (nativeAd != null) {
                         if (nativeAd != null) {
                             unifiedNativeAd = nativeAd;

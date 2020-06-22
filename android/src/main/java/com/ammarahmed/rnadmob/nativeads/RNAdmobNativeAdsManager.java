@@ -28,9 +28,9 @@ public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getNumOfLoadedAds(Promise promise) {
+    public void getNumOfLoadedAds(String id, Promise promise) {
 
-        promise.resolve(Constants.cacheManager.numberOfAds());
+        promise.resolve(Constants.cacheManager.numberOfAds(id));
 
     }
 
@@ -41,4 +41,17 @@ public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
 
     }
 
+    @ReactMethod
+    public void printLoadedAds() {
+
+        Constants.cacheManager.printAds();
+
+    }
+
+    @ReactMethod
+    public void hasLoadedAd(String id, Promise promise) {
+
+        promise.resolve(Constants.cacheManager.hasLoadedAd(id));
+
+    }
 }

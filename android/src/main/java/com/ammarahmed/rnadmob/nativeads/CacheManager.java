@@ -17,10 +17,16 @@ import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Random;
 
 public class CacheManager {
 
     private ArrayList<UnifiedNativeAd> nativeAds = new ArrayList<>();
+
+    Map< String, ArrayList<UnifiedNativeAd>> nativeAdsMap = new HashMap< String,ArrayList<UnifiedNativeAd>>();
 
     private AdLoader adLoader;
     private AdLoader.Builder builder;
@@ -31,7 +37,7 @@ public class CacheManager {
     private  int numAdRequested;
     private long previousAdRequestTime;
 
-    private String adUnitIDs;
+//     private String adUnitIDs;
     private Context mContext;
 
     public boolean isLoading() {
@@ -43,10 +49,20 @@ public class CacheManager {
         }
     }
 
-    public int numberOfAds() {
-        if (nativeAds != null) {
-            return nativeAds.size();
-        } else {
+    public void printAds() {
+        System.out.println("younes printing ");
+        Set< Map.Entry< String,ArrayList<UnifiedNativeAd> > > st = nativeAdsMap.entrySet();
+        System.out.println("younes printing set size: " + st.size());
+        for (Map.Entry< String,ArrayList<UnifiedNativeAd>> me:st) {
+           System.out.print("loaded ads: " + me.getKey() + ":");
+           System.out.println(me.getValue().size());
+        }
+    }
+
+    public int numberOfAds(String id) {
+        if (nativeAdsMap.containsKey(id)){
+            return nativeAdsMap.get(id).size();
+        }else{
             return 0;
         }
 
@@ -118,12 +134,12 @@ public class CacheManager {
 
         newAdRequestInterval = (long)requestInterval;
 
-        adUnitIDs = adUnitID;
+//         adUnitIDs = adUnitID;
         mContext = context;
         numAdRequested = numOfAdsToLoad;
         try {
             builder = new AdLoader.Builder(context, adUnitID);
-            builder.forUnifiedNativeAd(new onUnifiedNativeAdLoadedListener(adUnitID, nativeAds));
+            builder.forUnifiedNativeAd(new onUnifiedNativeAdLoadedListener(adUnitID, nativeAdsMap, mContext));
             videoOptions = new VideoOptions.Builder()
                     .setStartMuted(true)
                     .build();
@@ -144,16 +160,34 @@ public class CacheManager {
     }
 
 
-    public UnifiedNativeAd getNativeAd(int index) {
+    public UnifiedNativeAd getNativeAd(String id) {
 //         if ((System.currentTimeMillis() - previousAdRequestTime) > newAdRequestInterval) {
 //             loadNativeAds(mContext,adUnitIDs,numAdRequested, (int) newAdRequestInterval);
 //             return null;
 //         }
 
-        if (nativeAds != null && nativeAds.size() != 0) {
-            return nativeAds.get(index);
+        if (nativeAdsMap.containsKey(id) && nativeAdsMap.get(id).size() != 0) {
+            Random random = new Random();
+            int randomNumber = random.nextInt(nativeAdsMap.get(id).size() - 0) + 0;
+            UnifiedNativeAd result = nativeAdsMap.get(id).get(randomNumber);
+            nativeAdsMap.get(id).remove(randomNumber);
+            EventEmitter.sendEvent((ReactContext) this.mContext, "adREMOVED", null);
+            return result;
         } else {
             return  null;
+        }
+    }
+
+    public WritableMap hasLoadedAd(String id) {
+
+        if (nativeAdsMap.containsKey(id) && nativeAdsMap.get(id).size() != 0) {
+            WritableMap args = Arguments.createMap();
+            args.putBoolean(id, true);
+            return args;
+        } else {
+            WritableMap args = Arguments.createMap();
+            args.putBoolean(id, false);
+            return args;
         }
     }
 
