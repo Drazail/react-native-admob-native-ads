@@ -1,0 +1,57 @@
+{
+  "name": "react-native-admob-native-ads",
+  "version": "0.2.9",
+  "description": "A simple and robust library for creating & displaying Admob Native Ads in your React Native App using Native Views",
+  "author": {
+    "name": "Ammar Ahmed",
+    "email": "ammarahmed6506@gmail.com"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ammarahm-ed/react-native-admob-native-ads.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ammarahm-ed/react-native-admob-native-ads/issues/"
+  },
+  "homepage": "https://github.com/ammarahm-ed/react-native-admob-native-ads",
+  "keywords": [
+    "android",
+    "ios",
+    "react-native",
+    "admob",
+    "native-ads",
+    "admob-native-ads",
+    "admob-ads",
+    "react-native-admob",
+    "admob-ads",
+    "google-admob",
+    "react",
+    "native",
+    "admob",
+    "native",
+    "advanced",
+    "ads",
+    "native-advanced-ads",
+    "admob-native-advanced-ads"
+  ],
+  "dependencies": {
+    "prop-types": "15.7.2",
+    "react-native-star-rating": "1.1.0",
+    "react-native-gesture-handler": "1.6.1",
+    "react-native": "0.61.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": "0.61.5"
+  },
+  "private": false,
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2"
+  }
+}
