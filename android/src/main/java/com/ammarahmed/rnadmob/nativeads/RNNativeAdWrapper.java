@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableArray;
@@ -16,7 +18,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
-import java.util.Random;
 
 public class RNNativeAdWrapper extends LinearLayout {
 
@@ -37,14 +38,11 @@ public class RNNativeAdWrapper extends LinearLayout {
     public static final String adCallToAction = "adCallToAction";
     public static final String adStoreView = "adStoreView";
 
-    private final Runnable measureAndLayout = new Runnable() {
-        @Override
-        public void run() {
-            measure(
-                    MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
-            layout(getLeft(), getTop(), getRight(), getBottom());
-        }
+    private final Runnable measureAndLayout = () -> {
+        measure(
+                MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
+        layout(getLeft(), getTop(), getRight(), getBottom());
     };
 
     AdListener adListener = new AdListener() {
@@ -259,7 +257,7 @@ public class RNNativeAdWrapper extends LinearLayout {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }
@@ -310,7 +308,7 @@ public class RNNativeAdWrapper extends LinearLayout {
             requestLayout();
             nativeAdView.requestLayout();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }

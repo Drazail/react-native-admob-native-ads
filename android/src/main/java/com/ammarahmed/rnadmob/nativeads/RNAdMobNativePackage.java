@@ -14,7 +14,7 @@ public class RNAdMobNativePackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new RNAdmobNativeAdsManager(reactContext));
+        return Collections.singletonList(new RNAdmobNativeAdsManager(reactContext));
     }
 
     public List<Class<? extends JavaScriptModule>> createJSModules() {
@@ -24,7 +24,7 @@ public class RNAdMobNativePackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
 
-        return Arrays.<ViewManager>asList(
+        return Arrays.asList(
                 new RNAdMobNativeViewManager(),
                 new RNAdMobMediaViewManager(),
                 new RNAdComponentsWrapperManager(),

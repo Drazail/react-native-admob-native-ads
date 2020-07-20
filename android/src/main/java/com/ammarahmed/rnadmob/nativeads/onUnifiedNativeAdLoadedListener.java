@@ -1,17 +1,14 @@
 package com.ammarahmed.rnadmob.nativeads;
 
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import androidx.annotation.Nullable;
-import com.facebook.react.bridge.ReactContext;
 import android.content.Context;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.bridge.WritableMap;
+
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
 
 public class onUnifiedNativeAdLoadedListener implements UnifiedNativeAd.OnUnifiedNativeAdLoadedListener {
     String adUnitId;

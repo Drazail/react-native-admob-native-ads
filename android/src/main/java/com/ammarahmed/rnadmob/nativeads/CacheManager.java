@@ -1,14 +1,9 @@
 package com.ammarahmed.rnadmob.nativeads;
 
 import android.content.Context;
-import android.os.Handler;
-
-import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
@@ -17,28 +12,19 @@ import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class CacheManager {
 
-    private ArrayList<UnifiedNativeAd> nativeAds = new ArrayList<>();
+    private final ArrayList<UnifiedNativeAd> nativeAds = new ArrayList<>();
 
-    Map< String, ArrayList<UnifiedNativeAd>> nativeAdsMap = new HashMap< String,ArrayList<UnifiedNativeAd>>();
+    Map< String, ArrayList<UnifiedNativeAd>> nativeAdsMap = new HashMap<>();
 
     private AdLoader adLoader;
-    private AdLoader.Builder builder;
-    private VideoOptions videoOptions;
-    private NativeAdOptions adOptions;
     AdListener adListener;
-    private long newAdRequestInterval = 600000;
-    private  int numAdRequested;
-    private long previousAdRequestTime;
-
-//     private String adUnitIDs;
-    private Context mContext;
 
     public boolean isLoading() {
 
@@ -58,7 +44,6 @@ public class CacheManager {
            System.out.println(me.getValue().size());
         }
     }
-
     public int numberOfAds(String id) {
         if (nativeAdsMap.containsKey(id)){
             return nativeAdsMap.get(id).size();
@@ -72,7 +57,7 @@ public class CacheManager {
        adListener = listener;
     }
 
-    AdListener adListen = new AdListener() {
+    private final AdListener adListen = new AdListener() {
         @Override
         public void onAdFailedToLoad(int i) {
             super.onAdFailedToLoad(i);
@@ -109,7 +94,6 @@ public class CacheManager {
             if (adListener == null) return;
             if (nativeAds.size() == 1) {
                 adListener.onAdLoaded();
-                return;
             }
         }
 
@@ -132,19 +116,16 @@ public class CacheManager {
 
     public void loadNativeAds(Context context, String adUnitID, int numOfAdsToLoad, int requestInterval) {
 
-        newAdRequestInterval = (long)requestInterval;
-
-//         adUnitIDs = adUnitID;
-        mContext = context;
-        numAdRequested = numOfAdsToLoad;
+        //         adUnitIDs = adUnitID;
+        //     private String adUnitIDs;
         try {
-            builder = new AdLoader.Builder(context, adUnitID);
-            builder.forUnifiedNativeAd(new onUnifiedNativeAdLoadedListener(adUnitID, nativeAdsMap, mContext));
-            videoOptions = new VideoOptions.Builder()
+            AdLoader.Builder builder = new AdLoader.Builder(context, adUnitID);
+            builder.forUnifiedNativeAd(new onUnifiedNativeAdLoadedListener(adUnitID, nativeAdsMap, context));
+            VideoOptions videoOptions = new VideoOptions.Builder()
                     .setStartMuted(true)
                     .build();
 
-            adOptions = new NativeAdOptions.Builder()
+            NativeAdOptions adOptions = new NativeAdOptions.Builder()
                     .setVideoOptions(videoOptions)
                     .setAdChoicesPlacement(NativeAdOptions.ADCHOICES_TOP_RIGHT)
                     .build();
@@ -154,8 +135,9 @@ public class CacheManager {
 
             adLoader.loadAds(new AdRequest.Builder().build(),numOfAdsToLoad);
 
-            previousAdRequestTime = System.currentTimeMillis();
+            long previousAdRequestTime = System.currentTimeMillis();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -168,13 +150,12 @@ public class CacheManager {
 
         if (nativeAdsMap.containsKey(id) && nativeAdsMap.get(id).size() != 0) {
             Random random = new Random();
-            int randomNumber = random.nextInt(nativeAdsMap.get(id).size() - 0) + 0;
-            UnifiedNativeAd result = nativeAdsMap.get(id).get(randomNumber);
-//             nativeAdsMap.get(id).remove(randomNumber);
+            int randomNumber = random.nextInt(nativeAdsMap.get(id).size());
+            //             nativeAdsMap.get(id).remove(randomNumber);
 //             WritableMap args = Arguments.createMap();
 //             args.putInt(id, nativeAdsMap.get(id).size());
 //             EventEmitter.sendEvent((ReactContext) mContext, Constants.EVENT_AD_PRELOAD_DELETED, args);
-            return result;
+            return nativeAdsMap.get(id).get(randomNumber);
         } else {
             return  null;
         }

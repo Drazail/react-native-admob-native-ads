@@ -196,6 +196,7 @@ public class RNAdMobNativeViewManager extends ViewGroupManager<RNNativeAdWrapper
         ArrayList<Object> list = nativeArray.toArrayList();
 
         List<String> testDeviceIds = Arrays.asList(list.toArray(new String[list.size()]));
+        
         RequestConfiguration configuration =
                 new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
         MobileAds.setRequestConfiguration(configuration);
