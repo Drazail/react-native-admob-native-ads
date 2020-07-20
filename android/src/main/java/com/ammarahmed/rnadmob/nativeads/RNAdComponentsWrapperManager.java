@@ -11,6 +11,7 @@ public class RNAdComponentsWrapperManager extends ViewGroupManager<RNAdComponent
     public ThemedReactContext mContext;
 
     public static final String REACT_CLASS = "RNAdComponentWrapper";
+
     @Override
     public String getName() {
         return REACT_CLASS;

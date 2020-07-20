@@ -5,6 +5,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
 
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS7Padding";
@@ -16,7 +18,7 @@ public class RNAdmobNativeAdsManager extends ReactContextBaseJavaModule {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "RNAdmobNativeAdsManager";
     }
 

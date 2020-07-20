@@ -37,7 +37,7 @@ public class RNNativeAdWrapper extends LinearLayout {
     public static final String adIconView = "adIconView";
     public static final String adCallToAction = "adCallToAction";
     public static final String adStoreView = "adStoreView";
-
+    private Runnable runnable;
     private final Runnable measureAndLayout = () -> {
         measure(
                 MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
@@ -109,6 +109,7 @@ public class RNNativeAdWrapper extends LinearLayout {
         }
     };
 
+    // onUnifiedNativeAdLoadedListener HASN'T BEEN USED ANYWHERE
     UnifiedNativeAd.OnUnifiedNativeAdLoadedListener onUnifiedNativeAdLoadedListener = new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
         @Override
         public void onUnifiedNativeAdLoaded(UnifiedNativeAd nativeAd) {
@@ -148,7 +149,7 @@ public class RNNativeAdWrapper extends LinearLayout {
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -189,15 +190,11 @@ public class RNNativeAdWrapper extends LinearLayout {
             attachViews();
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         if (handler != null) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    loadAd();
-                }
-            }, adRefreshInterval);
+            runnable = this::loadAd;
+            handler.postDelayed(runnable, adRefreshInterval);
         }
     }
 
@@ -272,30 +269,28 @@ public class RNNativeAdWrapper extends LinearLayout {
     }
 
     private void loadAd() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Constants.cacheManager.numberOfAds(admobAdUnitId) != 0) {
-                    int numOfAds = Constants.cacheManager.numberOfAds(admobAdUnitId);
-                    UnifiedNativeAd nativeAd = Constants.cacheManager.getNativeAd(admobAdUnitId);
+        new Handler().postDelayed(() -> {
+            if (Constants.cacheManager.numberOfAds(admobAdUnitId) != 0) {
+                // numOfAds HASN'T BEEN USED ANYWHERE
+                int numOfAds = Constants.cacheManager.numberOfAds(admobAdUnitId);
+                UnifiedNativeAd nativeAd = Constants.cacheManager.getNativeAd(admobAdUnitId);
+                if (nativeAd != null) {
                     if (nativeAd != null) {
-                        if (nativeAd != null) {
-                            unifiedNativeAd = nativeAd;
-                            nativeAdView.setNativeAd(unifiedNativeAd);
-                        }
-                        setNativeAdToJS(nativeAd);
-                    } else {
-                        if (adListener != null)
-                            adListener.onAdFailedToLoad(3);
+                        unifiedNativeAd = nativeAd;
+                        nativeAdView.setNativeAd(unifiedNativeAd);
                     }
-
+                    setNativeAdToJS(nativeAd);
                 } else {
-                    Constants.cacheManager.loadNativeAds(mContext,admobAdUnitId,5,600000);
                     if (adListener != null)
                         adListener.onAdFailedToLoad(3);
                 }
+
+            } else {
+                Constants.cacheManager.loadNativeAds(mContext, admobAdUnitId, 5, 600000);
+                if (adListener != null)
+                    adListener.onAdFailedToLoad(3);
             }
-        },loadWithDelay);
+        }, loadWithDelay);
     }
 
     public void setLoadWithDelay(int delay) {
@@ -336,7 +331,7 @@ public class RNNativeAdWrapper extends LinearLayout {
 
     public void removeHandler() {
         if (handler != null) {
-            handler.removeCallbacks(null);
+            handler.removeCallbacks(runnable);
             handler = null;
         }
 

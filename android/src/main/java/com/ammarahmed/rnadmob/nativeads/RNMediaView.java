@@ -1,6 +1,7 @@
 package com.ammarahmed.rnadmob.nativeads;
 
 import android.content.Context;
+
 import com.google.android.gms.ads.formats.MediaView;
 
 public class RNMediaView extends MediaView {

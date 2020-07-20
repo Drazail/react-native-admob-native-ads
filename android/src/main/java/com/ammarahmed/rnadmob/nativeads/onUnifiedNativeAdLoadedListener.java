@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class onUnifiedNativeAdLoadedListener implements UnifiedNativeAd.OnUnifiedNativeAdLoadedListener {
     String adUnitId;
-    Map< String, ArrayList<UnifiedNativeAd> > nativeAds;
+    Map<String, ArrayList<UnifiedNativeAd>> nativeAds;
     Context mContext;
 
 //     private void sendEvent(String eventName, @Nullable WritableMap params) {
@@ -22,7 +22,7 @@ public class onUnifiedNativeAdLoadedListener implements UnifiedNativeAd.OnUnifie
 //           .emit(eventName, params);
 //     }
 
-    public onUnifiedNativeAdLoadedListener(String adUnitId, Map< String, ArrayList<UnifiedNativeAd> > nativeAds, Context context){
+    public onUnifiedNativeAdLoadedListener(String adUnitId, Map<String, ArrayList<UnifiedNativeAd>> nativeAds, Context context) {
         this.adUnitId = adUnitId;
         this.nativeAds = nativeAds;
         this.mContext = context;
@@ -31,9 +31,9 @@ public class onUnifiedNativeAdLoadedListener implements UnifiedNativeAd.OnUnifie
     @Override
     public void onUnifiedNativeAdLoaded(UnifiedNativeAd nativeAd) {
         ArrayList<UnifiedNativeAd> temp;
-        if (this.nativeAds.containsKey(this.adUnitId)){
+        if (this.nativeAds.containsKey(this.adUnitId)) {
             temp = this.nativeAds.get(this.adUnitId);
-        }else{
+        } else {
             temp = new ArrayList<>();
         }
         temp.add(nativeAd);

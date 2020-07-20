@@ -21,7 +21,7 @@ public class CacheManager {
 
     private final ArrayList<UnifiedNativeAd> nativeAds = new ArrayList<>();
 
-    Map< String, ArrayList<UnifiedNativeAd>> nativeAdsMap = new HashMap<>();
+    Map<String, ArrayList<UnifiedNativeAd>> nativeAdsMap = new HashMap<>();
 
     private AdLoader adLoader;
     AdListener adListener;
@@ -37,24 +37,25 @@ public class CacheManager {
 
     public void printAds() {
         System.out.println("younes printing ");
-        Set< Map.Entry< String,ArrayList<UnifiedNativeAd> > > st = nativeAdsMap.entrySet();
+        Set<Map.Entry<String, ArrayList<UnifiedNativeAd>>> st = nativeAdsMap.entrySet();
         System.out.println("younes printing set size: " + st.size());
-        for (Map.Entry< String,ArrayList<UnifiedNativeAd>> me:st) {
-           System.out.print("loaded ads: " + me.getKey() + ":");
-           System.out.println(me.getValue().size());
+        for (Map.Entry<String, ArrayList<UnifiedNativeAd>> me : st) {
+            System.out.print("loaded ads: " + me.getKey() + ":");
+            System.out.println(me.getValue().size());
         }
     }
+
     public int numberOfAds(String id) {
-        if (nativeAdsMap.containsKey(id)){
+        if (nativeAdsMap.containsKey(id)) {
             return nativeAdsMap.get(id).size();
-        }else{
+        } else {
             return 0;
         }
 
     }
 
     public void attachAdListener(AdListener listener) {
-       adListener = listener;
+        adListener = listener;
     }
 
     private final AdListener adListen = new AdListener() {
@@ -62,7 +63,7 @@ public class CacheManager {
         public void onAdFailedToLoad(int i) {
             super.onAdFailedToLoad(i);
             if (adListener == null) return;
-          adListener.onAdFailedToLoad(i);
+            adListener.onAdFailedToLoad(i);
         }
 
         @Override
@@ -83,7 +84,7 @@ public class CacheManager {
         public void onAdClicked() {
             super.onAdClicked();
             if (adListener == null) return;
-           adListener.onAdClicked();
+            adListener.onAdClicked();
 
         }
 
@@ -101,7 +102,7 @@ public class CacheManager {
         public void onAdImpression() {
             super.onAdImpression();
             if (adListener == null) return;
-           adListener.onAdImpression();
+            adListener.onAdImpression();
         }
 
         @Override
@@ -111,7 +112,6 @@ public class CacheManager {
             adListener.onAdLeftApplication();
         }
     };
-
 
 
     public void loadNativeAds(Context context, String adUnitID, int numOfAdsToLoad, int requestInterval) {
@@ -133,7 +133,7 @@ public class CacheManager {
 
             adLoader = builder.withAdListener(adListen).build();
 
-            adLoader.loadAds(new AdRequest.Builder().build(),numOfAdsToLoad);
+            adLoader.loadAds(new AdRequest.Builder().build(), numOfAdsToLoad);
 
             long previousAdRequestTime = System.currentTimeMillis();
         } catch (Exception e) {
@@ -157,7 +157,7 @@ public class CacheManager {
 //             EventEmitter.sendEvent((ReactContext) mContext, Constants.EVENT_AD_PRELOAD_DELETED, args);
             return nativeAdsMap.get(id).get(randomNumber);
         } else {
-            return  null;
+            return null;
         }
     }
 
