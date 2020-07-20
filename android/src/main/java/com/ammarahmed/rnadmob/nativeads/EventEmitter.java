@@ -1,6 +1,6 @@
 package com.ammarahmed.rnadmob.nativeads;
 
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
