@@ -1,6 +1,5 @@
 package com.ammarahmed.rnadmob.nativeads;
 
-
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.ReactContext;
