@@ -1,3 +1,4 @@
+import { NativeModules } from 'react-native';
 import IconView from './src/IconView';
 import CallToActionView from './src/CallToActionView'
 import HeadlineView from './src/HeadlineView'
@@ -10,6 +11,9 @@ import StarRatingView from './src/StarRatingView'
 import PriceView from "./src/PriceView";
 import AdBadge from "./src/AdBadge";
 import NativeAdView from './src';
+
+const { RNAdmobNativeAdsManager } = NativeModules;
+
 export default NativeAdView;
 
 export {
@@ -24,6 +28,7 @@ export {
   StarRatingView,
   PriceView,
   AdBadge,
+  RNAdmobNativeAdsManager,
 }
 
 
